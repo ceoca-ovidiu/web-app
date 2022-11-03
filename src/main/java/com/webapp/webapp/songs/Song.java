@@ -15,7 +15,7 @@ import java.net.URL;
 public class Song {
 
     @Id
-    private Integer songId;
+    private String songId;
     private String songName;
     private float duration;
     private String artist;
