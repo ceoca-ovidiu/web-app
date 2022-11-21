@@ -1,4 +1,4 @@
-package com.webapp.webapp.songs;
+package com.webapp.webapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

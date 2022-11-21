@@ -1,4 +1,4 @@
-package com.webapp.webapp.users;
+package com.webapp.webapp.model;
 
 
 import lombok.AllArgsConstructor;
@@ -7,19 +7,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZonedDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "user")
+@Document(collection = "users")
 public class User {
     @Id
-    private int id;
+    private String id;
     private String userFirstName;
     private String userLastName;
     private String userEmail;
+    private String userPlace;
     private Gender userGender;
-    private ZonedDateTime userCreatedTime;
-
 }

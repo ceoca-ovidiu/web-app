@@ -10,9 +10,13 @@
         <module name="webapp" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="web-app" target="19" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="web-app" options="-parameters" />
       <module name="webapp" options="-parameters" />
     </option>
   </component>

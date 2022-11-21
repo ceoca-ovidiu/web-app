@@ -1,5 +1,7 @@
-package com.webapp.webapp.songs;
+package com.webapp.webapp.service;
 
+import com.webapp.webapp.model.Song;
+import com.webapp.webapp.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
