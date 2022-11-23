@@ -14,6 +14,7 @@
 # Technologies used
 
 - Intellij JetBrains
+- Visual Studio Code
 - Maven
 - MongoDB
 - Node.js
@@ -23,15 +24,23 @@
 
 # Versions
 
-- Intellij : 2022.2.3 (Ultimate Edition)
-- node : v18.12.1
-- npm : 8.19.2
-- Java : 1.8.0_351
-- Java : 19.0.1
-- Spring Boot : 2.7.5
-- MongoDB : 6.0.1
-- Swagger UI : 2.9.2 [[link]](https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui/2.9.2)
-- Swagger2 : 2.9.2 [[link]](https://mvnrepository.com/artifact/io.springfox/springfox-swagger2/2.9.2)
+- IDEs
+  - Intellij : 2022.2.3 (Ultimate Edition)
+  - Visual Studio Code : 1.73.1 (Universal)
+- Server (**Spring**)
+  - Java : 1.8.0_351
+  - Java : 19.0.1
+  - Spring Boot : 2.7.5
+  - Swagger UI : 2.9.2 [[link]](https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui/2.9.2)
+  - Swagger2 : 2.9.2 [[link]](https://mvnrepository.com/artifact/io.springfox/springfox-swagger2/2.9.2)
+- Database
+  - MongoDB : 6.0.1
+- Client (**React**)
+  - node : v18.12.1
+  - npm : 8.19.2
+  - axios : 1.2.0
+  - bootstrap : 5.2.3
+  - react: 18.2.0
 
 # Install MongoDB (MacOS Ventura 13.0.1)
 
@@ -95,7 +104,14 @@ npm start
 ```
 > See [here](https://stackoverflow.com/questions/40546231/sh-react-scripts-command-not-found-after-running-npm-start)
 
-
+3. Install axios
+```
+npm instal axios
+```
+4. Install bootstrap
+```
+npm install bootstrap --save
+```
 # Errors
 
 1. > Web server failed to start. Port 8080 was already in use.
