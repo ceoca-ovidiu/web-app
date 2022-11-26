@@ -1,9 +1,9 @@
 package com.webapp.webapp.repository;
 
-import com.webapp.webapp.model.User;
+import com.webapp.webapp.model.TimeTrack;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {
+public interface TimeTrackRepository extends MongoRepository<TimeTrack, String> {
 }

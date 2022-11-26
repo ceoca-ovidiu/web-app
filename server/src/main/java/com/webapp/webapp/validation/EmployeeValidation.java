@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserValidation {
+public class EmployeeValidation {
 
     public Boolean isGenderValid(@NotNull String value) {
         if(value.toUpperCase().equals("MALE") || value.toUpperCase().equals("FEMALE")){

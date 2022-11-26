@@ -6,19 +6,17 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.net.URL;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "song")
-public class Song {
+@Document(collection = "timetrack")
+public class TimeTrack {
 
     @Id
-    private String songId;
-    private String songName;
-    private float duration;
-    private String artist;
-    private URL songURL;
-
+    private String timeTrackId;
+    private LocalDateTime checkInTime;
+    private LocalDateTime checkOutTime;
+    private String employeeId;
 }

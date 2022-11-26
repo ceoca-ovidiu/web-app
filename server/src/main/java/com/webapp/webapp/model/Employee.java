@@ -10,13 +10,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "users")
-public class User {
+@Document(collection = "employees")
+public class Employee {
     @Id
     private String id;
-    private String userFirstName;
-    private String userLastName;
-    private String userEmail;
-    private String userPlace;
-    private Gender userGender;
+    private String employeeFirstName;
+    private String employeeLastName;
+    private String employeeEmail;
+    private String employeePlace;
+    private Gender employeeGender;
 }
