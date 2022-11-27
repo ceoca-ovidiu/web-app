@@ -11,14 +11,18 @@
 
 # Description
 
+This is a project that mimic an employee time tracking in a company. The server side is written in *Java* with the help of **Spring Boot** framework. All the data is stored in a **MongoDB** database using *JSON*. The GUI is a window application made using *Python* language and **Tkinter** library.
+
 # Technologies used
 
 - Intellij JetBrains
+- PyCharm JetBrains
 - Visual Studio Code
 - Maven
 - MongoDB
-- Node.js
-- React.js 
+- Python
+- Java
+- Postman 
 
 ![spring_initializr](media/spring_initializr.png)
 
@@ -27,6 +31,7 @@
 - IDEs
   - Intellij : 2022.2.3 (Ultimate Edition)
   - Visual Studio Code : 1.73.1 (Universal)
+  - PyCharm : 2022.2.3 (Ultimate Edition)
 - Server (**Spring**)
   - Java : 1.8.0_351
   - Java : 19.0.1
@@ -35,83 +40,14 @@
   - Swagger2 : 2.9.2 [[link]](https://mvnrepository.com/artifact/io.springfox/springfox-swagger2/2.9.2)
 - Database
   - MongoDB : 6.0.1
-- Client (**React**)
-  - node : v18.12.1
-  - npm : 8.19.2
-  - axios : 1.2.0
-  - bootstrap : 5.2.3
-  - react: 18.2.0
-
+- Client (**Python**)
+  - pip : v22.3.1
+  - requests : 2.28.1
+  - python : 3.11
+  
 # Install MongoDB (MacOS Ventura 13.0.1)
 
-1. First you need to install **Homebrew** by opening a terminal and inserting the following command
 
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-2. You need to configure the Homebrew in order to work properly.
-
-3. After installing Homebrew, it is time to install **MongoDB** so run this command in a terminal
-
-```
-brew tap mongodb/brew
-```
-
-4. Now install the actual MongoDB
-
-```
-brew install mongodb-community
-```
-
-MongoDB stores data as **BSON** which is the binary format for a JSON file.
-There are **Documents** which are translated into rows for SQL and **Collections** which are the actual tables
-
-# MongoDB commands
-
-1. Start the server 
-```
-brew services start mongodb-community
-```
-2. Stop the server
-```
-brew services stop mongodb-community
-```
-3. If you want to have MongoDB running in background use 
-```
-mongod --config /opt/homebrew/etc/mongod.conf --fork
-```
-4. Enter MongoDB shell
-```
-mongosh
-```
-5. List databases
-```
-show dbs
-```
-
-# React
-
-1. Start the server 
-```
-npm start
-```
-
-2. If you get the error *sh:react-scripts: command not found*
-```
-npm install
-npm start
-```
-> See [here](https://stackoverflow.com/questions/40546231/sh-react-scripts-command-not-found-after-running-npm-start)
-
-3. Install axios
-```
-npm instal axios
-```
-4. Install bootstrap
-```
-npm install bootstrap --save
-```
 # Errors
 
 1. > Web server failed to start. Port 8080 was already in use.

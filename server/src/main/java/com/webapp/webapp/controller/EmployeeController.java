@@ -23,14 +23,12 @@ public class EmployeeController {
         return employeeService.getALlEmployees();
     }
 
-    //FIXME: Validarea trebuie sa returneze ceva vizibil altfel se confunda cu null
-
     @PostMapping("/createEmployee")
     public Employee createEmployee(@RequestBody Employee employee) {
-//        if (employeeValidation.isFirstNameValid(employee.getEmployeeFirstName()) && employeeValidation.isLastNameValid(employee.getEmployeeLastName()) && employeeValidation.isEmailValid(employee.getEmployeeEmail()) && employeeValidation.isPlaceValid(employee.getEmployeePlace()) && employeeValidation.isGenderValid(employee.getEmployeeGender().toString())) {
-//        }
-        return employeeService.createEmployee(employee);
-//        return null;
+        if (employeeValidation.isFirstNameValid(employee.getEmployeeFirstName()) && employeeValidation.isLastNameValid(employee.getEmployeeLastName()) && employeeValidation.isPlaceValid(employee.getEmployeePlace()) && employeeValidation.isGenderValid(employee.getEmployeeGender().toString())) {
+            return employeeService.createEmployee(employee);
+        }
+        return null;
     }
 
     @GetMapping("/getEmployeesByFirstName/{firstName}")
@@ -43,10 +41,7 @@ public class EmployeeController {
 
     @GetMapping("/getEmployeesByEmail/{email}")
     public List<Employee> searchByEmail(@PathVariable String email) {
-        if (employeeValidation.isEmailValid(email)) {
-            return employeeService.searchByField("employeeEmail", email);
-        }
-        return new ArrayList<>();
+        return employeeService.searchByField("employeeEmail", email);
     }
 
     @GetMapping("/getEmployeesByPlace/{place}")
