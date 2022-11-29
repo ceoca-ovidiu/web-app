@@ -101,6 +101,8 @@ Tkinter Designer is a tool which takes a UI made in *Figma* and translates it in
 
 Read the instructions and how to use Tkinter Designer [here](https://github.com/ParthJadhav/Tkinter-Designer)
 
+![ui](media/ui.png)
+
 # Errors
 
 1. > Web server failed to start. Port 8080 was already in use.

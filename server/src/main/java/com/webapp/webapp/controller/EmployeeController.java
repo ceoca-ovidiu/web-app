@@ -1,6 +1,7 @@
 package com.webapp.webapp.controller;
 
 import com.webapp.webapp.model.Employee;
+import com.webapp.webapp.model.TimeTrack;
 import com.webapp.webapp.service.EmployeeService;
 import com.webapp.webapp.validation.EmployeeValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class EmployeeController {
             return employeeService.searchByField("employeeFirstName", firstName);
         }
         return new ArrayList<>();
+    }
+
+    @GetMapping("/getHourlyRateById/{id}")
+    public String getHourlyRateById(@PathVariable String id){
+        return employeeService.getHourlyRate(id);
     }
 
     @GetMapping("/getEmployeesByEmail/{email}")

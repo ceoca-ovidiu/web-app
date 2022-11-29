@@ -22,6 +22,7 @@ GET_EMPLOYEE_BY_ID_URL = "http://localhost:8080/getEmployeeById/"
 DELETE_EMPLOYEE_BY_ID_URL = "http://localhost:8080/deleteEmployee/"
 GET_EMPLOYEE_BY_GENDER_URL = "http://localhost:8080/getEmployeesByGender/"
 GET_EMPLOYEE_BY_EMAIL_URL = "http://localhost:8080/getEmployeesByEmail/"
+GET_WORKED_HOURS_BY_ID = "http://localhost:8080/getHourlyRateById/"
 GET_ALL_TIME_TRACKS_URL = "http://localhost:8080/getAllTimeTracks"
 CREATE_TIME_TRACK_URL = "http://localhost:8080/createTimeTrack"
 GET_TIME_TRACK_BY_EMPLOYEE_ID_URL = "http://localhost:8080/getTimeTrackByEmployeeId/"
@@ -188,9 +189,10 @@ def print_employee_list(employee_list):
                           f"  Last Name: {employee.get('employeeLastName')}\n" \
                           f"  Email: {employee.get('employeeEmail')}\n" \
                           f"  Place: {employee.get('employeePlace')}\n" \
-                          f"  Gender: {employee.get('employeeGender')}\n" \
-                          f"########################################\n"
+                          f"  Gender: {employee.get('employeeGender')}\n"
         output_textarea.insert(END, string_to_print)
+        output_textarea.insert(END, requests.get(GET_WORKED_HOURS_BY_ID + employee.get('id')).text)
+        output_textarea.insert(END, "\n########################################\n")
     result_textarea.insert(END, str(len(employee_list)))
     disable_text_areas()
 
@@ -206,14 +208,6 @@ def print_time_track_list(time_track_list):
         output_textarea.insert(END, string_to_print)
     result_textarea.insert(END, str(len(time_track_list)))
     disable_text_areas()
-
-
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"./assets/frame0")
-
-
-def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)
 
 
 # FRAME
@@ -339,9 +333,6 @@ time_track_check_out_entry.place(x=68.0, y=771.0, width=350.0, height=48.0)
 output_textarea = Text(bd=0, bg="#A7C957", fg="#000716", highlightthickness=0)
 output_textarea.place(x=480.0, y=530.0, width=700.0, height=348.0)
 
-# scrollbar = tkinter.Scrollbar(window, output_textarea.yview())
-# scrollbar.place(x=475, y=530, width=5, height=348)
-
 error_textarea = Text(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 error_textarea.place(x=557.0, y=487.0, width=SMALL_TEXT_AREA_WIDTH, height=SMALL_TEXT_AREA_HEIGHT)
 
@@ -359,8 +350,10 @@ canvas.create_text(70.0, 304.0, anchor="nw", text="Place", fill="#000000", font=
 canvas.create_text(70.0, 384.0, anchor="nw", text="Gender (MALE/FEMALE)", fill="#000000",
                    font=("MuktaMalar Medium", 20 * -1))
 canvas.create_text(70.0, 584.0, anchor="nw", text="Employee ID", fill="#000000", font=("MuktaMalar Medium", 20 * -1))
-canvas.create_text(70.0, 664.0, anchor="nw", text="Check in time", fill="#000000", font=("MuktaMalar Medium", 20 * -1))
-canvas.create_text(70.0, 744.0, anchor="nw", text="Check out time", fill="#000000", font=("MuktaMalar Medium", 20 * -1))
+canvas.create_text(70.0, 664.0, anchor="nw", text="Check in (YYYY-DD-MMTHH:MM:SS.000)", fill="#000000",
+                   font=("MuktaMalar Medium", 20 * -1))
+canvas.create_text(70.0, 744.0, anchor="nw", text="Check out (YYYY-DD-MMTHH:MM:SS.000)", fill="#000000",
+                   font=("MuktaMalar Medium", 20 * -1))
 canvas.create_text(171.0, 30.0, anchor="nw", text="Add Employee", fill="#000000", font=("MuktaMalar Medium", 24 * -1))
 canvas.create_text(150.0, 541.0, anchor="nw", text="Create Time Track", fill="#000000",
                    font=("MuktaMalar Medium", 24 * -1))
