@@ -8,7 +8,7 @@
   - [Create database](#create-a-database-in-mongodb)
 - [Server](#server--spring)
 - [User Interface](#user-interface--python)
-- [Errors](#errors)
+- [Encountered Errors](#encountered-errors)
 
 
 # Description
@@ -103,9 +103,15 @@ Read the instructions and how to use Tkinter Designer [here](https://github.com/
 
 ![ui](media/ui.png)
 
-# Errors
+# Color Palette
 
-1. > Web server failed to start. Port 8080 was already in use.
+![color_palette](media/color_palette.png)
+
+# Encountered Errors
+
+## Server 
+
+1. > Web server failed to start. Port 8080 was already in use. (Server)
 
 Change the port the app is running on with this command:
 
@@ -115,9 +121,30 @@ server.port=8081
 
 Paste it into **application.properties** file from *resources* folder.
 
-2. > Cannot autogenerate id of type java.lang.Integer for entity of type com.webapp.webapp.model.Song!
+2. > Cannot autogenerate id of type java.lang.Integer for entity of type com.webapp.webapp.model.Employee! (Server)
 
 Change ID from whatever type to String type
 
 See
 here: [link](https://stackoverflow.com/questions/71351310/cannot-autogenerate-id-of-type-java-lang-long-for-entity-of-type-entity-mongod)
+
+
+## UI
+
+3. > Python requests - No connection adapters were found for ... (UI)
+
+You need to include *http://* part before the request call.
+
+See here: [link](https://stackoverflow.com/questions/15115328/python-requests-no-connection-adapters)
+
+4. > Tkinter button automatically call the function on runtime (UI)
+
+You need to call the function using *lambda* expression.
+
+See here: [link](https://stackoverflow.com/questions/3704568/tkinter-button-command-activates-upon-running-program)
+
+5. > Expecting value: line 1 column 1 (char 0)
+
+The request returns nothing which cannot be converted to json.
+
+See here: [link](https://stackoverflow.com/questions/16573332/jsondecodeerror-expecting-value-line-1-column-1-char-0)

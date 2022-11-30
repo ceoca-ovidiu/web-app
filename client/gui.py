@@ -1,5 +1,4 @@
-import tkinter
-from pathlib import Path
+import re
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, END, DISABLED, NORMAL
 
 import requests
@@ -37,83 +36,148 @@ def get_all_employees():
 
 
 def get_employees_by_first_name():
-    clear_output()
-    print_employee_list(requests.get(GET_EMPLOYEE_BY_FIRST_NAME_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_employee_list(requests.get(GET_EMPLOYEE_BY_FIRST_NAME_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def get_employees_by_place():
-    clear_output()
-    print_employee_list(requests.get(GET_EMPLOYEE_BY_PLACE_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_employee_list(requests.get(GET_EMPLOYEE_BY_PLACE_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def get_employees_by_email():
-    clear_output()
-    print_employee_list(requests.get(GET_EMPLOYEE_BY_EMAIL_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_employee_list(requests.get(GET_EMPLOYEE_BY_EMAIL_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def get_employees_by_gender():
-    clear_output()
-    print_employee_list(requests.get(GET_EMPLOYEE_BY_GENDER_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_employee_list(requests.get(GET_EMPLOYEE_BY_GENDER_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def get_employee_by_id():
-    clear_output()
-    print_employee_list(requests.get(GET_EMPLOYEE_BY_ID_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_employee_list(requests.get(GET_EMPLOYEE_BY_ID_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def delete_employee_by_id():
-    clear_output()
-    print_employee_list(requests.get(GET_EMPLOYEE_BY_ID_URL + input_entry.get()).json())
-    requests.delete(DELETE_EMPLOYEE_BY_ID_URL + input_entry.get())
-    output_textarea.insert(END, "\n\nSUCCESSFULLY DELETED EMPLOYEE ABOVE")
+    if check_input():
+        clear_output()
+        print_employee_list(requests.get(GET_EMPLOYEE_BY_ID_URL + input_entry.get()).json())
+        requests.delete(DELETE_EMPLOYEE_BY_ID_URL + input_entry.get())
+        output_textarea.insert(END, "\n\nSUCCESSFULLY DELETED EMPLOYEE ABOVE")
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def create_employee():
     clear_output()
-    employee = {"employeeFirstName": add_employee_first_name_entry.get(),
-                "employeeLastName": add_employee_last_name_entry.get(),
-                "employeeEmail": add_employee_email_entry.get(),
-                "employeePlace": add_employee_place_entry.get(),
-                "employeeGender": add_employee_gender_entry.get()}
-    requests.post(CREATE_EMPLOYEE_URL, json=employee)
-    output_textarea.insert(END, "\nSUCCESSFULLY ADDED EMPLOYEE")
-    clear_employee_input_fields()
+    if check_employee_first_name():
+        if check_employee_last_name():
+            if check_employee_email():
+                if check_email_duplicates():
+                    if check_employee_place():
+                        if check_employee_gender():
+                            employee = {"employeeFirstName": add_employee_first_name_entry.get(),
+                                        "employeeLastName": add_employee_last_name_entry.get(),
+                                        "employeeEmail": add_employee_email_entry.get(),
+                                        "employeePlace": add_employee_place_entry.get(),
+                                        "employeeGender": add_employee_gender_entry.get()}
+                            requests.post(CREATE_EMPLOYEE_URL, json=employee)
+                            output_textarea.config(state=NORMAL)
+                            output_textarea.insert(END, "\nSUCCESSFULLY ADDED EMPLOYEE")
+                            output_textarea.config(state=DISABLED)
+                            clear_employee_input_fields()
+                        else:
+                            print_to_error_text_area("\nGender")
+                    else:
+                        print_to_error_text_area("\nPlace")
+                else:
+                    print_to_error_text_area("\nDuplicate Email")
+            else:
+                print_to_error_text_area("\nEmail")
+        else:
+            print_to_error_text_area("\nLast Name")
+    else:
+        print_to_error_text_area("\nFirst Name")
+
+
+def print_to_error_text_area(message):
+    error_textarea.config(state=NORMAL)
+    error_textarea.delete('1.0', END)
+    error_textarea.insert(END, message)
+    error_textarea.config(state=DISABLED)
 
 
 def get_all_time_track():
     clear_output()
+    output_textarea.delete('1.0', END)
     print_time_track_list(requests.get(GET_ALL_TIME_TRACKS_URL).json())
 
 
 def create_time_track():
     clear_output()
-    time_track = {
-        "checkInTime": time_track_check_in_entry.get(),
-        "checkOutTime": time_track_check_out_entry.get(),
-        "employeeId": time_track_employee_id_entry.get()
-    }
-    requests.post(CREATE_TIME_TRACK_URL, json=time_track)
-    string_to_print = "\nSUCCESSFULLY CREATED TIME TRACK FOR EMPLOYEE: " + time_track_employee_id_entry.get()
-    output_textarea.insert(END, string_to_print)
-    clear_time_track_input_fields()
+    if check_time_track_employee_id():
+        if check_time_track_check_in():
+            if check_time_track_check_out():
+                time_track = {
+                    "checkInTime": time_track_check_in_entry.get(),
+                    "checkOutTime": time_track_check_out_entry.get(),
+                    "employeeId": time_track_employee_id_entry.get()
+                }
+                requests.post(CREATE_TIME_TRACK_URL, json=time_track)
+                string_to_print = "\nSUCCESSFULLY CREATED TIME TRACK FOR EMPLOYEE: " + time_track_employee_id_entry.get()
+                output_textarea.config(state=NORMAL)
+                output_textarea.insert(END, string_to_print)
+                output_textarea.config(state=DISABLED)
+                clear_time_track_input_fields()
+            else:
+                print_to_error_text_area("\nWRONG CHECK OUT")
+        else:
+            print_to_error_text_area("\nWRONG CHECK IN")
+    else:
+        print_to_error_text_area("\nWRONG ID")
 
 
 def get_time_track_by_employee_id():
-    clear_output()
-    print_time_track_list(requests.get(GET_TIME_TRACK_BY_EMPLOYEE_ID_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_time_track_list(requests.get(GET_TIME_TRACK_BY_EMPLOYEE_ID_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def get_time_track_by_id():
-    clear_output()
-    print_time_track_list(requests.get(GET_TIME_TRACK_BY_ID_URL + input_entry.get()).json())
+    if check_input():
+        clear_output()
+        print_time_track_list(requests.get(GET_TIME_TRACK_BY_ID_URL + input_entry.get()).json())
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def delete_time_track():
-    clear_output()
-
-    print_time_track_list(requests.get(GET_TIME_TRACK_BY_ID_URL + input_entry.get()).json())
-    requests.delete(DELETE_TIME_TRACK_URL + input_entry.get())
-    output_textarea.insert(END, "\n\nSUCCESSFULLY DELETED TIME TRACK ABOVE")
+    if check_input():
+        clear_output()
+        print_time_track_list(requests.get(GET_TIME_TRACK_BY_ID_URL + input_entry.get()).json())
+        requests.delete(DELETE_TIME_TRACK_URL + input_entry.get())
+        output_textarea.insert(END, "\n\nSUCCESSFULLY DELETED TIME TRACK ABOVE")
+    else:
+        print_to_error_text_area("\nINPUT EMPTY")
 
 
 def clear_output():
@@ -200,17 +264,94 @@ def print_employee_list(employee_list):
 def print_time_track_list(time_track_list):
     enable_text_areas()
     for time_track in time_track_list:
-        string_to_print = f"  ID: {time_track.get('timeTrackId')}\n" \
+        employee = requests.get(GET_EMPLOYEE_BY_ID_URL + time_track.get('employeeId')).json()
+        string_to_print = f"  Time Track ID: {time_track.get('timeTrackId')}\n" \
                           f"  Check In Time: {time_track.get('checkInTime')}\n" \
                           f"  Check Out Time: {time_track.get('checkOutTime')}\n" \
                           f"  Employee ID: {time_track.get('employeeId')}\n" \
+                          f"  Employee First Name: {employee[0].get('employeeFirstName')}\n" \
+                          f"  Employee Last Name: {employee[0].get('employeeLastName')}\n" \
                           f"########################################\n"
         output_textarea.insert(END, string_to_print)
     result_textarea.insert(END, str(len(time_track_list)))
     disable_text_areas()
 
 
+# EMPLOYEE VALIDATION
+
+def check_employee_first_name():
+    if add_employee_first_name_entry.get() == '':
+        return False
+    return add_employee_first_name_entry.get().isalpha()
+
+
+def check_employee_last_name():
+    if add_employee_last_name_entry.get() == '':
+        return False
+    print(add_employee_last_name_entry.get().isalpha())
+    return add_employee_last_name_entry.get().isalpha()
+
+
+def check_employee_email():
+    employee_email = add_employee_email_entry.get()
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    if employee_email == '':
+        return False
+    return re.fullmatch(regex, employee_email)
+
+
+def check_employee_place():
+    if add_employee_place_entry.get() == '':
+        return False
+    return add_employee_place_entry.get().isalpha()
+
+
+def check_employee_gender():
+    if add_employee_gender_entry.get() == '':
+        return False
+    if add_employee_gender_entry.get() == "MALE" or add_employee_gender_entry.get() == "FEMALE":
+        return True
+    return False
+
+
+def check_email_duplicates():
+    employee_list = requests.get(GET_EMPLOYEE_BY_EMAIL_URL + add_employee_email_entry.get()).json()
+    if len(employee_list) != 0:
+        return False
+    return True
+
+
+# TIME TRACK VALIDATION
+
+def check_time_track_employee_id():
+    if time_track_employee_id_entry.get() == '':
+        return False
+    employee_list = requests.get(GET_EMPLOYEE_BY_ID_URL + time_track_employee_id_entry.get()).json()
+    if len(employee_list) == 0:
+        return False
+    return True
+
+
+def check_time_track_check_in():
+    if time_track_check_in_entry.get() == '':
+        return False
+    return True
+
+
+def check_time_track_check_out():
+    if time_track_check_out_entry.get() == '':
+        return False
+    return True
+
+
+def check_input():
+    if input_entry.get() == '':
+        return False
+    return True
+
+
 # FRAME
+
 
 window = Tk()
 window.geometry("1200x900")
@@ -233,14 +374,14 @@ add_employee_submit_button.place(x=170.0, y=474.0, width=SUBMIT_BUTTON_WIDTH, he
 create_time_track_submit_button = Button(text="Submit", borderwidth=0, highlightthickness=0,
                                          command=lambda: create_time_track(),
                                          relief="flat")
-create_time_track_submit_button.place(x=150.0, y=833.0, width=SUBMIT_BUTTON_WIDTH, height=BUTTON_HEIGHT)
+create_time_track_submit_button.place(x=170.0, y=833.0, width=SUBMIT_BUTTON_WIDTH, height=BUTTON_HEIGHT)
 
 get_employees_by_first_name_button = Button(text="Get Employees By First Name", borderwidth=0, highlightthickness=0,
                                             command=lambda: get_employees_by_first_name(),
                                             relief="flat")
 get_employees_by_first_name_button.place(x=500.0, y=73.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 
-get_all_employees_button = Button(text="Get all employees", borderwidth=0, highlightthickness=0,
+get_all_employees_button = Button(text="Get All Employees", borderwidth=0, highlightthickness=0,
                                   command=lambda: get_all_employees(),
                                   relief="flat")
 get_all_employees_button.place(x=500.0, y=131.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
@@ -255,7 +396,7 @@ get_time_track_by_id_button = Button(text="Get Time Track By ID", borderwidth=0,
                                      relief="flat")
 get_time_track_by_id_button.place(x=900.0, y=131.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 
-get_time_track_by_empl_id_button = Button(text="Get Time Track By Empl ID", borderwidth=0, highlightthickness=0,
+get_time_track_by_empl_id_button = Button(text="Get Time Track By Employee ID", borderwidth=0, highlightthickness=0,
                                           command=lambda: get_time_track_by_employee_id(),
                                           relief="flat")
 get_time_track_by_empl_id_button.place(x=900.0, y=189.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
