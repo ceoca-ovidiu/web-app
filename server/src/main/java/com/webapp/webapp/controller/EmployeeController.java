@@ -2,7 +2,6 @@ package com.webapp.webapp.controller;
 
 import com.webapp.webapp.model.Employee;
 import com.webapp.webapp.service.EmployeeService;
-import com.webapp.webapp.validation.EmployeeValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +12,6 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
-
-    @Autowired
-    EmployeeValidation employeeValidation;
 
     @GetMapping("/getEmployees")
     public List<Employee> getEmployees() {

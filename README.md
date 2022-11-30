@@ -7,7 +7,10 @@
   - [Connect app to MongoDB](#connect-app-to-mongodb)
   - [Create database](#create-a-database-in-mongodb)
 - [Server](#server--spring)
+- [Block Diagram](#block-diagram)
+- [Activity Diagram](#activity-diagram)
 - [User Interface](#user-interface--python)
+- [Color Palette](#color-palette)
 - [Encountered Errors](#encountered-errors)
 
 
@@ -93,6 +96,14 @@ spring.data.mongodb.database= <database_name>
 
 ![spring_initializr](media/spring_initializr.png)
 
+# Block Diagram
+
+![block_diagram](media/block_diagram.svg)
+
+# Activity Diagram
+
+![activity_diagram](media/activity_diagram.svg)
+
 # User Interface ( Python )
 
 The user interface was made with the help of **Tkinter** library and **Tkinter Designer**.
@@ -105,7 +116,7 @@ Read the instructions and how to use Tkinter Designer [here](https://github.com/
 
 # Color Palette
 
-![color_palette](media/color_palette.png)
+![color_palette](media/color_palette.svg)
 
 # Encountered Errors
 
