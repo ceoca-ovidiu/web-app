@@ -37,4 +37,9 @@ public class TimeTrackController {
     public Boolean deleteTimeTrack(@PathVariable String id) {
         return timeTrackService.deleteTimeTrack(id);
     }
+
+    @PutMapping("/updateTimeTrack/{id}")
+    public TimeTrack updateTimeTrack(@PathVariable String id, @RequestBody TimeTrack timeTrack) {
+        return timeTrackService.updateTimeTrack(id, timeTrack);
+    }
 }

@@ -68,4 +68,14 @@ public class TimeTrackService {
             return true;
         }
     }
+
+    public TimeTrack updateTimeTrack(String id, TimeTrack timeTrack) {
+        List<TimeTrack> timeTracks = searchByField("timeTrackId", id);
+        TimeTrack timeTrackToBeUpdated = timeTracks.get(0);
+        timeTrackToBeUpdated.setCheckInTime(timeTrack.getCheckInTime());
+        timeTrackToBeUpdated.setCheckOutTime(timeTrack.getCheckOutTime());
+        timeTrackToBeUpdated.setEmployeeId(timeTrack.getEmployeeId());
+        timeTrackRepository.save(timeTrackToBeUpdated);
+        return timeTrackToBeUpdated;
+    }
 }

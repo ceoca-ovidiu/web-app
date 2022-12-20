@@ -22,13 +22,14 @@ GET_EMPLOYEE_BY_ID_URL = "http://localhost:8080/getEmployeeById/"
 DELETE_EMPLOYEE_BY_ID_URL = "http://localhost:8080/deleteEmployee/"
 GET_EMPLOYEE_BY_GENDER_URL = "http://localhost:8080/getEmployeesByGender/"
 GET_EMPLOYEE_BY_EMAIL_URL = "http://localhost:8080/getEmployeesByEmail/"
-UPDATE_EMPLOYEE_BY_ID = "http://localhost:8080/updateEmployee/"
-GET_WORKED_HOURS_BY_ID = "http://localhost:8080/getHourlyRateById/"
+UPDATE_EMPLOYEE_BY_ID_URL = "http://localhost:8080/updateEmployee/"
+GET_WORKED_HOURS_BY_ID_URL = "http://localhost:8080/getHourlyRateById/"
 GET_ALL_TIME_TRACKS_URL = "http://localhost:8080/getAllTimeTracks"
 CREATE_TIME_TRACK_URL = "http://localhost:8080/createTimeTrack"
 GET_TIME_TRACK_BY_EMPLOYEE_ID_URL = "http://localhost:8080/getTimeTrackByEmployeeId/"
 GET_TIME_TRACK_BY_ID_URL = "http://localhost:8080/getTimeTrackById/"
 DELETE_TIME_TRACK_URL = "http://localhost:8080/deleteTimeTrack/"
+UPDATE_TIME_TRACK_URL = "http://localhost:8080/updateTimeTrack/"
 
 
 # FUNCTIONS
@@ -257,7 +258,7 @@ def print_employee_list(employee_list):
                           f"  Place: {employee.get('employeePlace')}\n" \
                           f"  Gender: {employee.get('employeeGender')}\n"
         output_textarea.insert(END, string_to_print)
-        output_textarea.insert(END, requests.get(GET_WORKED_HOURS_BY_ID + employee.get('id')).text)
+        output_textarea.insert(END, requests.get(GET_WORKED_HOURS_BY_ID_URL + employee.get('id')).text)
         output_textarea.insert(END, "\n########################################\n")
     result_textarea.insert(END, str(len(employee_list)))
     disable_text_areas()
@@ -305,7 +306,7 @@ def update_employee():
                                             "employeeEmail": add_employee_email_entry.get(),
                                             "employeePlace": add_employee_place_entry.get(),
                                             "employeeGender": add_employee_gender_entry.get()}
-                                requests.put(UPDATE_EMPLOYEE_BY_ID + input_entry.get(), json=employee)
+                                requests.put(UPDATE_EMPLOYEE_BY_ID_URL + input_entry.get(), json=employee)
                                 output_textarea.config(state=NORMAL)
                                 output_textarea.insert(END, "\nSUCCESSFULLY ADDED EMPLOYEE")
                                 output_textarea.config(state=DISABLED)
@@ -327,7 +328,30 @@ def update_employee():
 
 
 def update_time_track():
-    pass
+    clear_output()
+    if check_input():
+        if check_time_track_employee_id():
+            if check_time_track_check_in():
+                if check_time_track_check_out():
+                    time_track = {
+                        "checkInTime": time_track_check_in_entry.get(),
+                        "checkOutTime": time_track_check_out_entry.get(),
+                        "employeeId": time_track_employee_id_entry.get()
+                    }
+                    requests.post(UPDATE_TIME_TRACK_URL + input_entry.get(), json=time_track)
+                    string_to_print = "\nSUCCESSFULLY UPDATED TIME TRACK FOR EMPLOYEE: " + time_track_employee_id_entry.get()
+                    output_textarea.config(state=NORMAL)
+                    output_textarea.insert(END, string_to_print)
+                    output_textarea.config(state=DISABLED)
+                    clear_time_track_input_fields()
+                else:
+                    print_to_error_text_area("\nWRONG CHECK OUT")
+            else:
+                print_to_error_text_area("\nWRONG CHECK IN")
+        else:
+            print_to_error_text_area("\nWRONG ID")
+    else:
+        print_to_error_text_area("INVALID ID")
 
 
 # EMPLOYEE VALIDATION
