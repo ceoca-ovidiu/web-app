@@ -1,5 +1,6 @@
 import re
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, END, DISABLED, NORMAL
+from datetime import datetime
 
 import requests
 
@@ -21,6 +22,7 @@ GET_EMPLOYEE_BY_ID_URL = "http://localhost:8080/getEmployeeById/"
 DELETE_EMPLOYEE_BY_ID_URL = "http://localhost:8080/deleteEmployee/"
 GET_EMPLOYEE_BY_GENDER_URL = "http://localhost:8080/getEmployeesByGender/"
 GET_EMPLOYEE_BY_EMAIL_URL = "http://localhost:8080/getEmployeesByEmail/"
+UPDATE_EMPLOYEE_BY_ID = "http://localhost:8080/updateEmployee/"
 GET_WORKED_HOURS_BY_ID = "http://localhost:8080/getHourlyRateById/"
 GET_ALL_TIME_TRACKS_URL = "http://localhost:8080/getAllTimeTracks"
 CREATE_TIME_TRACK_URL = "http://localhost:8080/createTimeTrack"
@@ -277,6 +279,57 @@ def print_time_track_list(time_track_list):
     disable_text_areas()
 
 
+def now_time_check_in():
+    time_track_check_in_entry.delete(0, END)
+    time_track_check_in_entry.insert(0, datetime.now().strftime("%Y-%d-%mT%H:%M:%S"))
+    pass
+
+
+def now_time_check_out():
+    time_track_check_out_entry.delete(0, END)
+    time_track_check_out_entry.insert(0, datetime.now().strftime("%Y-%d-%mT%H:%M:%S"))
+    pass
+
+
+def update_employee():
+    clear_output()
+    if check_input():
+        if check_employee_first_name():
+            if check_employee_last_name():
+                if check_employee_email():
+                    if check_email_duplicates():
+                        if check_employee_place():
+                            if check_employee_gender():
+                                employee = {"employeeFirstName": add_employee_first_name_entry.get(),
+                                            "employeeLastName": add_employee_last_name_entry.get(),
+                                            "employeeEmail": add_employee_email_entry.get(),
+                                            "employeePlace": add_employee_place_entry.get(),
+                                            "employeeGender": add_employee_gender_entry.get()}
+                                requests.put(UPDATE_EMPLOYEE_BY_ID + input_entry.get(), json=employee)
+                                output_textarea.config(state=NORMAL)
+                                output_textarea.insert(END, "\nSUCCESSFULLY ADDED EMPLOYEE")
+                                output_textarea.config(state=DISABLED)
+                                clear_employee_input_fields()
+                            else:
+                                print_to_error_text_area("\nGender")
+                        else:
+                            print_to_error_text_area("\nPlace")
+                    else:
+                        print_to_error_text_area("\nDuplicate Email")
+                else:
+                    print_to_error_text_area("\nEmail")
+            else:
+                print_to_error_text_area("\nLast Name")
+        else:
+            print_to_error_text_area("\nFirst Name")
+    else:
+        print_to_error_text_area("INVALID ID")
+
+
+def update_time_track():
+    pass
+
+
 # EMPLOYEE VALIDATION
 
 def check_employee_first_name():
@@ -439,8 +492,23 @@ delete_employee_by_id_button = Button(text="Delete Employee By ID", borderwidth=
                                       command=lambda: delete_employee_by_id(), relief="flat")
 delete_employee_by_id_button.place(x=500.0, y=421.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
 
-# ENTRY
+now_time_check_in_button = Button(text="T", borderwidth=0, highlightthickness=0,
+                                  command=lambda: now_time_check_in(), relief="flat")
+now_time_check_in_button.place(x=430.0, y=700.0, width=30, height=BUTTON_HEIGHT)
 
+now_time_check_out_button = Button(text="T", borderwidth=0, highlightthickness=0,
+                                   command=lambda: now_time_check_out(), relief="flat")
+now_time_check_out_button.place(x=430.0, y=780.0, width=30, height=BUTTON_HEIGHT)
+
+update_employee_button = Button(text="Update Employee", borderwidth=0, highlightthickness=0,
+                                command=lambda: update_employee(), relief="flat")
+update_employee_button.place(x=500.0, y=840.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+
+update_time_track_button = Button(text="Update Time Track", borderwidth=0, highlightthickness=0,
+                                  command=lambda: update_time_track(), relief="flat")
+update_time_track_button.place(x=900.0, y=840.0, width=BUTTON_WIDTH, height=BUTTON_HEIGHT)
+
+# ENTRY
 
 add_employee_first_name_entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 add_employee_first_name_entry.place(x=70.0, y=91.0, width=350.0, height=48.0)
@@ -465,20 +533,25 @@ time_track_employee_id_entry.place(x=68.0, y=611.0, width=350.0, height=48.0)
 
 time_track_check_in_entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 time_track_check_in_entry.place(x=68.0, y=691.0, width=350.0, height=48.0)
+time_track_check_in_entry.insert(0, "YYYY-DD-MMTHH:MM:SS.000")
 
 time_track_check_out_entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 time_track_check_out_entry.place(x=68.0, y=771.0, width=350.0, height=48.0)
+time_track_check_out_entry.insert(0, "YYYY-DD-MMTHH:MM:SS.000")
 
 # TEXTAREAS
 
 output_textarea = Text(bd=0, bg="#A7C957", fg="#000716", highlightthickness=0)
-output_textarea.place(x=480.0, y=530.0, width=700.0, height=348.0)
+output_textarea.place(x=480.0, y=530.0, width=700.0, height=300.0)
+output_textarea.config(state=DISABLED)
 
 error_textarea = Text(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 error_textarea.place(x=557.0, y=487.0, width=SMALL_TEXT_AREA_WIDTH, height=SMALL_TEXT_AREA_HEIGHT)
+error_textarea.config(state=DISABLED)
 
 result_textarea = Text(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 result_textarea.place(x=1005.0, y=487.0, width=SMALL_TEXT_AREA_WIDTH, height=SMALL_TEXT_AREA_HEIGHT)
+result_textarea.config(state=DISABLED)
 
 # TEXT
 

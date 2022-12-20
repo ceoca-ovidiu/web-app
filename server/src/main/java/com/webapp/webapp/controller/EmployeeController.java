@@ -26,7 +26,6 @@ public class EmployeeController {
     @GetMapping("/getEmployeesByFirstName/{firstName}")
     public List<Employee> searchByFirstName(@PathVariable String firstName) {
         return employeeService.searchByField("employeeFirstName", firstName);
-
     }
 
     @GetMapping("/getHourlyRateById/{id}")
@@ -42,7 +41,6 @@ public class EmployeeController {
     @GetMapping("/getEmployeesByPlace/{place}")
     public List<Employee> searchByPlace(@PathVariable String place) {
         return employeeService.searchByField("employeePlace", place);
-
     }
 
     @GetMapping("/getEmployeeById/{id}")
@@ -53,11 +51,15 @@ public class EmployeeController {
     @GetMapping("/getEmployeesByGender/{gender}")
     public List<Employee> searchByGender(@PathVariable String gender) {
         return employeeService.searchByField("employeeGender", gender);
-
     }
 
     @DeleteMapping("/deleteEmployee/{id}")
-    public Boolean deleteUser(@PathVariable String id) {
+    public Boolean deleteEmployee(@PathVariable String id) {
         return employeeService.deleteEmployee(id);
+    }
+
+    @PutMapping("/updateEmployee/{id}")
+    public Employee updateEmployee(@PathVariable String id, @RequestBody Employee employee) {
+        return employeeService.updateEmployee(id, employee);
     }
 }

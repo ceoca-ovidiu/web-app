@@ -107,4 +107,16 @@ public class EmployeeService {
         }
         return "  WORKED HOURS : " + minutes / 60.0;
     }
+
+    public Employee updateEmployee(String id, Employee employee) {
+        List<Employee> employeeList = searchByField("id", id);
+        Employee employeeToBeUpdated = employeeList.get(0);
+        employeeToBeUpdated.setEmployeeFirstName(employee.getEmployeeFirstName());
+        employeeToBeUpdated.setEmployeeLastName(employee.getEmployeeLastName());
+        employeeToBeUpdated.setEmployeePlace(employee.getEmployeePlace());
+        employeeToBeUpdated.setEmployeeEmail(employee.getEmployeeEmail());
+        employeeToBeUpdated.setEmployeeGender(employee.getEmployeeGender());
+        employeeRepository.save(employeeToBeUpdated);
+        return employeeToBeUpdated;
+    }
 }
