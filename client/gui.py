@@ -369,7 +369,6 @@ def check_employee_first_name():
 def check_employee_last_name():
     if add_employee_last_name_entry.get() == '':
         return False
-    print(add_employee_last_name_entry.get().isalpha())
     return add_employee_last_name_entry.get().isalpha()
 
 
