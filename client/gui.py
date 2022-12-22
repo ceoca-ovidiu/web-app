@@ -1,3 +1,4 @@
+import json
 import re
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, END, DISABLED, NORMAL
 from datetime import datetime
@@ -282,13 +283,13 @@ def print_time_track_list(time_track_list):
 
 def now_time_check_in():
     time_track_check_in_entry.delete(0, END)
-    time_track_check_in_entry.insert(0, datetime.now().strftime("%Y-%d-%mT%H:%M:%S"))
+    time_track_check_in_entry.insert(0, datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
     pass
 
 
 def now_time_check_out():
     time_track_check_out_entry.delete(0, END)
-    time_track_check_out_entry.insert(0, datetime.now().strftime("%Y-%d-%mT%H:%M:%S"))
+    time_track_check_out_entry.insert(0, datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
     pass
 
 
@@ -338,12 +339,15 @@ def update_time_track():
                         "checkOutTime": time_track_check_out_entry.get(),
                         "employeeId": time_track_employee_id_entry.get()
                     }
-                    requests.post(UPDATE_TIME_TRACK_URL + input_entry.get(), json=time_track)
-                    string_to_print = "\nSUCCESSFULLY UPDATED TIME TRACK FOR EMPLOYEE: " + time_track_employee_id_entry.get()
-                    output_textarea.config(state=NORMAL)
-                    output_textarea.insert(END, string_to_print)
-                    output_textarea.config(state=DISABLED)
-                    clear_time_track_input_fields()
+                    print(requests.put(UPDATE_TIME_TRACK_URL + input_entry.get(), json=time_track))
+                    if requests.put(UPDATE_TIME_TRACK_URL + input_entry.get(), json=time_track).status_code == 200:
+                        string_to_print = "\nSUCCESSFULLY UPDATED TIME TRACK FOR EMPLOYEE: " + time_track_employee_id_entry.get()
+                        output_textarea.config(state=NORMAL)
+                        output_textarea.insert(END, string_to_print)
+                        output_textarea.config(state=DISABLED)
+                        clear_time_track_input_fields()
+                    else:
+                        print_to_error_text_area("Error")
                 else:
                     print_to_error_text_area("\nWRONG CHECK OUT")
             else:
@@ -557,11 +561,11 @@ time_track_employee_id_entry.place(x=68.0, y=611.0, width=350.0, height=48.0)
 
 time_track_check_in_entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 time_track_check_in_entry.place(x=68.0, y=691.0, width=350.0, height=48.0)
-time_track_check_in_entry.insert(0, "YYYY-DD-MMTHH:MM:SS.000")
+time_track_check_in_entry.insert(0, "YYYY-MM-DDTHH:MM:SS.000")
 
 time_track_check_out_entry = Entry(bd=0, bg="#D9D9D9", fg="#000716", highlightthickness=0)
 time_track_check_out_entry.place(x=68.0, y=771.0, width=350.0, height=48.0)
-time_track_check_out_entry.insert(0, "YYYY-DD-MMTHH:MM:SS.000")
+time_track_check_out_entry.insert(0, "YYYY-MM-DDTHH:MM:SS.000")
 
 # TEXTAREAS
 
@@ -588,9 +592,9 @@ canvas.create_text(70.0, 304.0, anchor="nw", text="Place", fill="#000000", font=
 canvas.create_text(70.0, 384.0, anchor="nw", text="Gender (MALE/FEMALE)", fill="#000000",
                    font=("MuktaMalar Medium", 20 * -1))
 canvas.create_text(70.0, 584.0, anchor="nw", text="Employee ID", fill="#000000", font=("MuktaMalar Medium", 20 * -1))
-canvas.create_text(70.0, 664.0, anchor="nw", text="Check in (YYYY-DD-MMTHH:MM:SS.000)", fill="#000000",
+canvas.create_text(70.0, 664.0, anchor="nw", text="Check in (YYYY-MM-DDTHH:MM:SS.000)", fill="#000000",
                    font=("MuktaMalar Medium", 20 * -1))
-canvas.create_text(70.0, 744.0, anchor="nw", text="Check out (YYYY-DD-MMTHH:MM:SS.000)", fill="#000000",
+canvas.create_text(70.0, 744.0, anchor="nw", text="Check out (YYYY-MM-DDTHH:MM:SS.000)", fill="#000000",
                    font=("MuktaMalar Medium", 20 * -1))
 canvas.create_text(171.0, 30.0, anchor="nw", text="Add Employee", fill="#000000", font=("MuktaMalar Medium", 24 * -1))
 canvas.create_text(150.0, 541.0, anchor="nw", text="Create Time Track", fill="#000000",
