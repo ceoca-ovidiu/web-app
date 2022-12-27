@@ -1,4 +1,3 @@
-import json
 import re
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, END, DISABLED, NORMAL
 from datetime import datetime
@@ -284,13 +283,11 @@ def print_time_track_list(time_track_list):
 def now_time_check_in():
     time_track_check_in_entry.delete(0, END)
     time_track_check_in_entry.insert(0, datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
-    pass
 
 
 def now_time_check_out():
     time_track_check_out_entry.delete(0, END)
     time_track_check_out_entry.insert(0, datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
-    pass
 
 
 def update_employee():
