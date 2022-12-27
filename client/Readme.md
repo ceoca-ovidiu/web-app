@@ -7,7 +7,13 @@
 
 # Description
 
-# User Interface ( Python )
+This is the first GUI for the app. It consists of a single window application that is divided into four different
+sections. The *Add Employee* section is responsible for adding a new employee to the database while also *validating*
+the input. In the same manner, *Create Time Track* is used to create a new time track for a specific employee based on
+their ID. The third section is the one with the buttons which manipulates the data from the database and finally, the
+fourth section is used to display the result.
+
+# User Interface
 
 The user interface was made with the help of **Tkinter** library and **Tkinter Designer**.
 
