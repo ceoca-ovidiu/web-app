@@ -1,7 +1,8 @@
 # Table of Content
 
+- [Table of Content](#table-of-content)
 - [Description](#description)
-- [User Interface](#user-interface--python-)
+- [User Interface](#user-interface)
 - [Color Palette](#color-palette)
 - [User Guide](#user-guide)
 
@@ -30,7 +31,7 @@ Read the instructions and how to use Tkinter Designer [here](https://github.com/
 # User Guide
 
 | Request | Name                            | Type   | Input                                                                                     | Output     | Obs                             |
-|---------|---------------------------------|--------|-------------------------------------------------------------------------------------------|------------|---------------------------------|
+| ------- | ------------------------------- | ------ | ----------------------------------------------------------------------------------------- | ---------- | ------------------------------- |
 | GET     | Get Employees By First Name     | Button | Employee First Name                                                                       | LIST       |                                 |
 | GET     | Get All Employees               | Button |                                                                                           | LIST       |                                 |
 | GET     | Get Employees By Email          | Button | Employee Email                                                                            | LIST       |                                 |

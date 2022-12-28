@@ -1,5 +1,6 @@
 # Table of Content
 
+- [Table of Content](#table-of-content)
 - [Description](#description)
 - [User Interface](#user-interface)
 - [Color Palette](#color-palette)
@@ -24,7 +25,7 @@ Read the instructions and how to use Tkinter Designer [here](https://github.com/
 # User Guide
 
 | Request | Name                               | Type   | Input                                                            | Output     | Obs                             |
-|---------|------------------------------------|--------|------------------------------------------------------------------|------------|---------------------------------|
+| ------- | ---------------------------------- | ------ | ---------------------------------------------------------------- | ---------- | ------------------------------- |
 | GET     | Get All Time Tracks By Employee ID | Button | Employee ID                                                      | LIST       |                                 |
 | GET     | Get Time Track By ID               | Button | Time Track ID                                                    | LIST       |                                 |
 | PUT     | Update                             | Button | - Time Track ID<br/>- Employee ID<br/>- Check in<br/>- Check out | TIME TRACK |                                 |
