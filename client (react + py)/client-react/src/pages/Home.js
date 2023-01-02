@@ -14,7 +14,6 @@ export default function Home() {
 
     const loadEmployees = async () => {
         const result = await axios.get("http://localhost:8080/getEmployees");
-        console.log(result.data)
         setEmployees(result.data);
     };
 
@@ -30,12 +29,9 @@ export default function Home() {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">ID</th>
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Place</th>
-                            <th scope="col">Gender</th>
                             <th scope="col">Worked Hours</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -46,16 +42,13 @@ export default function Home() {
                                 <th scope="row" key={index}>
                                     {index + 1}
                                 </th>
-                                <td>{employee.id}</td>
                                 <td>{employee.employeeFirstName}</td>
                                 <td>{employee.employeeLastName}</td>
                                 <td>{employee.employeeEmail}</td>
-                                <td>{employee.employeePlace}</td>
-                                <td>{employee.employeeGender}</td>
-                                <td>3</td>
+                                <td>{employee.workedHours}</td>
                                 <td>
                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <Link type="button" className="btn btn-success" to={`/viewemployee/${id}`}>View</Link>
+                                        <Link type="button" className="btn btn-success" to={`/viewemployee/${employee.id}`}>View</Link>
                                         <Link className="btn btn-warning" to={`/editemployee/${employee.id}`}>Edit</Link>
                                         <button type="button" className="btn btn-danger" onClick={(e) => deleteEmployee(employee.id)}>Delete</button>
                                     </div>

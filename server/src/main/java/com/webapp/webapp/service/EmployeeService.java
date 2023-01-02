@@ -25,20 +25,29 @@ public class EmployeeService {
     @Autowired
     TimeTrackService timeTrackService;
 
-    String uri = "mongodb+srv://root:root@mongocluster.rxylknq.mongodb.net/?retryWrites=true&w=majority";
-    String databaseName = "webapp";
-    String collectionName = "employee";
+    private void updateWorkedHours() {
+        List<Employee> employeeList = employeeRepository.findAll();
+        if (!employeeList.isEmpty()) {
+            for (Employee employee : employeeList) {
+                employee.setWorkedHours(getHourlyRate(employee.getId()));
+                employeeRepository.save(employee);
+            }
+        }
+    }
 
     public List<Employee> getALlEmployees() {
+        updateWorkedHours();
         return employeeRepository.findAll();
     }
 
     public Employee createEmployee(Employee employee) {
+        updateWorkedHours();
+        employee.setWorkedHours("0");
         return employeeRepository.save(employee);
     }
 
-
     public List<Employee> searchByField(String field, String value) {
+        updateWorkedHours();
         List<Employee> employeeList = new ArrayList<>();
 
         switch (field) {
@@ -89,6 +98,7 @@ public class EmployeeService {
     }
 
     public Boolean deleteEmployee(String id) {
+        updateWorkedHours();
         List<Employee> employeeList = searchByField("id", id);
         if (employeeList.isEmpty()) {
             return false;
@@ -102,10 +112,9 @@ public class EmployeeService {
         List<TimeTrack> timeTrackList = timeTrackService.searchByField("employeeId", id);
         long minutes = 0;
         for (TimeTrack timeTrack : timeTrackList) {
-            System.out.println(timeTrack.getCheckInTime() + " " + timeTrack.getCheckOutTime());
             minutes = minutes + ChronoUnit.MINUTES.between(timeTrack.getCheckInTime(), timeTrack.getCheckOutTime());
         }
-        return "  WORKED HOURS : " + minutes / 60.0;
+        return "" + minutes / 60.0;
     }
 
     public Employee updateEmployee(String id, Employee employee) {
@@ -117,6 +126,7 @@ public class EmployeeService {
         employeeToBeUpdated.setEmployeeEmail(employee.getEmployeeEmail());
         employeeToBeUpdated.setEmployeeGender(employee.getEmployeeGender());
         employeeRepository.save(employeeToBeUpdated);
+        updateWorkedHours();
         return employeeToBeUpdated;
     }
 }

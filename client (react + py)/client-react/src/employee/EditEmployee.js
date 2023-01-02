@@ -6,15 +6,9 @@ export default function EditEmployee() {
 
     let navigate = useNavigate();
 
+    const [employee, setEmployees] = useState([]);
+    
     const { id } = useParams();
-
-    const [employee, setEmployees] = useState({
-        employeeFirstName: "",
-        employeeLastName: "",
-        employeeEmail: "",
-        employeePlace: "",
-        employeeGender: "",
-    });
 
     useEffect(() => {
         loadEmployee();

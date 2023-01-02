@@ -19,4 +19,5 @@ public class Employee {
     private String employeeEmail;
     private String employeePlace;
     private Gender employeeGender;
+    private String workedHours;
 }
