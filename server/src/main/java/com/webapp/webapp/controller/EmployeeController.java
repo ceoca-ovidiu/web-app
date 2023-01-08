@@ -60,7 +60,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/updateEmployee/{id}")
-    public Employee updateEmployee(@PathVariable String id, @RequestBody Employee employee) {
+    public Boolean updateEmployee(@PathVariable String id, @RequestBody Employee employee) {
         return employeeService.updateEmployee(id, employee);
     }
 }

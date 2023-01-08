@@ -78,4 +78,18 @@ public class TimeTrackService {
         timeTrackRepository.save(timeTrackToBeUpdated);
         return timeTrackToBeUpdated;
     }
+
+    public Boolean deleteTimeTrackByEmployeeID(String id) {
+        List<TimeTrack> timeTracks = getALlTimeTracks();
+        if (timeTracks.isEmpty()) {
+            return false;
+        } else {
+            for (TimeTrack timeTrack : timeTracks) {
+                if (timeTrack.getEmployeeId().equals(id)) {
+                    timeTrackRepository.deleteById(timeTrack.getTimeTrackId());
+                }
+            }
+            return true;
+        }
+    }
 }

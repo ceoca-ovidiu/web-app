@@ -1,17 +1,18 @@
 # Table of Content
 
+- [Table of Content](#table-of-content)
 - [Description](#description)
-- [Technologies Used](#technologies-used)
+- [Technologies used](#technologies-used)
 - [Versions](#versions)
 - [Block Diagram](#block-diagram)
 - [Activity Diagram](#activity-diagram)
 - [User Guide](#user-guide)
-    - [Server](#server)
-    - [Client (Python)](#client-python)
-    - [Client (React + Python)](#client-rect--python)
+  - [Server](#server)
+  - [Client (python)](#client-python)
+  - [Client (React + Python)](#client-react--python)
 - [Encountered Errors](#encountered-errors)
-    - [Server](#server-1)
-    - [UI](#ui)
+  - [Server](#server-1)
+  - [UI](#ui)
 
 # Description
 
@@ -92,7 +93,7 @@ python3 gui.py
 
 3. Follow the instructions from [here](https://github.com/ceoca-ovidiu/web-app/blob/main/client/Readme.md) to find more about the buttons and what they do.
 
-## Client (rect + python)
+## Client (React + Python)
 
 1. For the *python* UI the steps are the same as above, but the folder is **client (react + py)**
 

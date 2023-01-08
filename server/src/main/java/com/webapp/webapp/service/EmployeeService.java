@@ -48,53 +48,57 @@ public class EmployeeService {
 
     public List<Employee> searchByField(String field, String value) {
         updateWorkedHours();
-        List<Employee> employeeList = new ArrayList<>();
-
-        switch (field) {
-            case "employeeFirstName":
-                for (Employee employee : getALlEmployees()) {
-                    if (employee.getEmployeeFirstName().equals(value)) {
-                        employeeList.add(employee);
+        List<Employee> returnedEmployeeList = new ArrayList<>();
+        List<Employee> employeeList = getALlEmployees();
+        if (employeeList.isEmpty()) {
+            return returnedEmployeeList;
+        } else {
+            switch (field) {
+                case "employeeFirstName" -> {
+                    for (Employee employee : employeeList) {
+                        if (employee.getEmployeeFirstName().equals(value)) {
+                            returnedEmployeeList.add(employee);
+                        }
                     }
                 }
-                break;
-            case "employeeLastName":
-                for (Employee employee : getALlEmployees()) {
-                    if (employee.getEmployeeLastName().equals(value)) {
-                        employeeList.add(employee);
+                case "employeeLastName" -> {
+                    for (Employee employee : employeeList) {
+                        if (employee.getEmployeeLastName().equals(value)) {
+                            returnedEmployeeList.add(employee);
+                        }
                     }
                 }
-                break;
-            case "employeeEmail":
-                for (Employee employee : getALlEmployees()) {
-                    if (employee.getEmployeeEmail().equals(value)) {
-                        employeeList.add(employee);
+                case "employeeEmail" -> {
+                    for (Employee employee : employeeList) {
+                        if (employee.getEmployeeEmail().equals(value)) {
+                            returnedEmployeeList.add(employee);
+                        }
                     }
                 }
-                break;
-            case "employeePlace":
-                for (Employee employee : getALlEmployees()) {
-                    if (employee.getEmployeePlace().equals(value)) {
-                        employeeList.add(employee);
+                case "employeePlace" -> {
+                    for (Employee employee : employeeList) {
+                        if (employee.getEmployeePlace().equals(value)) {
+                            returnedEmployeeList.add(employee);
+                        }
                     }
                 }
-                break;
-            case "id":
-                for (Employee employee : getALlEmployees()) {
-                    if (employee.getId().equals(value)) {
-                        employeeList.add(employee);
+                case "id" -> {
+                    for (Employee employee : employeeList) {
+                        if (employee.getId().equals(value)) {
+                            returnedEmployeeList.add(employee);
+                        }
                     }
                 }
-                break;
-            case "employeeGender":
-                for (Employee employee : getALlEmployees()) {
-                    if (employee.getEmployeeGender() == Gender.valueOf(value)) {
-                        employeeList.add(employee);
+                case "employeeGender" -> {
+                    for (Employee employee : employeeList) {
+                        if (employee.getEmployeeGender() == Gender.valueOf(value)) {
+                            returnedEmployeeList.add(employee);
+                        }
                     }
                 }
-                break;
+            }
+            return returnedEmployeeList;
         }
-        return employeeList;
     }
 
     public Boolean deleteEmployee(String id) {
@@ -104,29 +108,38 @@ public class EmployeeService {
             return false;
         } else {
             employeeRepository.deleteById(id);
+            timeTrackService.deleteTimeTrackByEmployeeID(id);
             return true;
         }
     }
 
     public String getHourlyRate(String id) {
         List<TimeTrack> timeTrackList = timeTrackService.searchByField("employeeId", id);
-        long minutes = 0;
-        for (TimeTrack timeTrack : timeTrackList) {
-            minutes = minutes + ChronoUnit.MINUTES.between(timeTrack.getCheckInTime(), timeTrack.getCheckOutTime());
+        if (timeTrackList.isEmpty()) {
+            return "";
+        } else {
+            long minutes = 0;
+            for (TimeTrack timeTrack : timeTrackList) {
+                minutes = minutes + ChronoUnit.MINUTES.between(timeTrack.getCheckInTime(), timeTrack.getCheckOutTime());
+            }
+            return "" + minutes / 60.0;
         }
-        return "" + minutes / 60.0;
     }
 
-    public Employee updateEmployee(String id, Employee employee) {
+    public Boolean updateEmployee(String id, Employee employee) {
         List<Employee> employeeList = searchByField("id", id);
-        Employee employeeToBeUpdated = employeeList.get(0);
-        employeeToBeUpdated.setEmployeeFirstName(employee.getEmployeeFirstName());
-        employeeToBeUpdated.setEmployeeLastName(employee.getEmployeeLastName());
-        employeeToBeUpdated.setEmployeePlace(employee.getEmployeePlace());
-        employeeToBeUpdated.setEmployeeEmail(employee.getEmployeeEmail());
-        employeeToBeUpdated.setEmployeeGender(employee.getEmployeeGender());
-        employeeRepository.save(employeeToBeUpdated);
-        updateWorkedHours();
-        return employeeToBeUpdated;
+        if (employeeList.isEmpty()) {
+            return false;
+        } else {
+            Employee employeeToBeUpdated = employeeList.get(0);
+            employeeToBeUpdated.setEmployeeFirstName(employee.getEmployeeFirstName());
+            employeeToBeUpdated.setEmployeeLastName(employee.getEmployeeLastName());
+            employeeToBeUpdated.setEmployeePlace(employee.getEmployeePlace());
+            employeeToBeUpdated.setEmployeeEmail(employee.getEmployeeEmail());
+            employeeToBeUpdated.setEmployeeGender(employee.getEmployeeGender());
+            employeeRepository.save(employeeToBeUpdated);
+            updateWorkedHours();
+            return true;
+        }
     }
 }

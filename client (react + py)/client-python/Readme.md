@@ -8,6 +8,8 @@
 
 # Description
 
+This is a UI created with **Tkinter** library used by employees to manipulate the time tracks. 
+
 # User Interface 
 
 The user interface was made with the help of **Tkinter** library and **Tkinter Designer**.
