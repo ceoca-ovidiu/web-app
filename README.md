@@ -5,7 +5,7 @@
 - [Technologies used](#technologies-used)
 - [Versions](#versions)
 - [Block Diagram](#block-diagram)
-- [Activity Diagram](#activity-diagram)
+- [Sequence Diagram](#sequence-diagram)
 - [User Guide](#user-guide)
   - [Server](#server)
   - [Client (python)](#client-python)
@@ -60,9 +60,9 @@ of **Spring Boot** framework. All the data is stored in a **MongoDB** database u
 
 ![block_diagram](media/block_diagram.svg)
 
-# Activity Diagram
+# Sequence Diagram
 
-![activity_diagram](media/activity_diagram.svg)
+![sequence_diagram](media/sequence_diagram.svg)
 
 # User Guide
 ## Server
