@@ -64,6 +64,59 @@ of **Spring Boot** framework. All the data is stored in a **MongoDB** database u
 
 ![sequence_diagram](media/sequence_diagram.svg)
 
+```
+title Sequence Diagram
+
+actor Employee
+actor Admin
+participant Server
+participant Database
+
+Admin->Server:/getAllEmployees
+Server->Database:findAll()
+Server<--Database:List<Employee>
+Admin<--Server:List<Employee>
+
+Admin->Server:/createEmployee
+Server->Database:save()
+Server<--Database:Employee
+Admin<--Server:Employee
+
+Admin->Server:/deleteEmployee/{id}
+Server->Database:deleteById()
+Server<--Database:Boolean
+Admin<--Server:Boolean
+
+Admin->Server:/updateEmployee/{id}
+Server->Database:save()
+Server<--Database:Boolean
+Admin<--Server:Boolean
+
+Employee->Server:/createTimeTrack
+Server->Database:save()
+Server<--Database:TimeTrack
+Employee<--Server:TimeTrack
+
+Employee->Server:/updateTimeTrack/{id}
+Server->Database:save()
+Server<--Database:TimeTrack
+Employee<--Server:TimeTrack
+
+Employee->Server:/getTimeTrackByEmployeeId/{employeeId}
+Server->Database:searchByField("employeeId", employeeId)
+Server<--Database:List<TimeTrack>
+Employee<--Server:List<TimeTrack>
+
+Employee->Server:/getTimeTrackById/{timeTrackId}
+Server->Database:searchByField("timeTrackId", timeTrackId)
+Server<--Database:List<TimeTrack>
+Employee<--Server:List<TimeTrack>
+
+Employee->Employee:clearIn()
+Employee->Employee:clearOut()
+Employee->Employee:insertTime()
+```
+The sequance diagram was created using [this](https://sequencediagram.org) website.
 # User Guide
 ## Server
 
