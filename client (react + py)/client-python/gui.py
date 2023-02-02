@@ -31,7 +31,7 @@ GET_ALL_EMPLOYEES_URL = "http://localhost:8080/getEmployees"
 
 
 # TIME TRACK METHODS
-
+print("Hello World!")
 def create_time_track():
     if is_employee_id_valid():
         if is_check_in_time_valid():
